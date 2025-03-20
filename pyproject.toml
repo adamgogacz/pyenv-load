@@ -1,6 +1,6 @@
 [project]
 name = "pyenv-load"
-version = "0.1.0"
+version = "0.1.1"
 description = "Loads from text or JSON file into environment"
 authors = [
     {name = "Adam Gogacz",email = "adam.byk.360@gmail.com"}

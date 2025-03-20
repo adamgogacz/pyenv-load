@@ -30,7 +30,7 @@ poetry config pypi-token.pypi your-token
 The included `build.py` script automates testing, linting, and building:
 
 ```bash
-python build.py
+python3 build.py
 ```
 
 After the build completes successfully, publish with:
