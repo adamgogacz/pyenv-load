@@ -18,7 +18,7 @@ def env_file():
         f.write("KEY2='value2'\n")
         f.write('KEY3="value3"\n')
         f.write("KEY4=value with spaces\n")
-        f.write("KEY5=value # with comment\n")
+        f.write("KEY5=value with #\n")
         f.write("  SPACED_KEY  =  spaced value  \n")
         f.write("EMPTY_KEY=\n")
         f.write("\n")  # Empty line
@@ -60,7 +60,7 @@ def test_load_dotenv(env_file):
     assert os.environ["KEY2"] == "value2"
     assert os.environ["KEY3"] == "value3"
     assert os.environ["KEY4"] == "value with spaces"
-    assert os.environ["KEY5"] == "value"
+    assert os.environ["KEY5"] == "value with #"
     assert os.environ["SPACED_KEY"] == "spaced value"
     assert os.environ["EMPTY_KEY"] == ""
     assert os.environ["EXPANDED_KEY"] == "value1/suffix"
@@ -99,3 +99,28 @@ def test_invalid_env_file():
     finally:
         # Cleanup
         os.unlink(f.name_path)
+
+
+def test_load_env_from_same_dir():
+    """Test loading environment variables from a .env.local file in the tests directory."""
+
+    # Clear environment variables that might interfere with the test
+    for key in ["APP_NAME", "DEBUG", "PORT", "ALLOWED_HOSTS", "DATABASE"]:
+        if key in os.environ:
+            del os.environ[key]
+
+    # The .env.local file is assumed to exist in the tests directory
+    # Get the directory of the current test file
+    current_dir = Path(__file__).parent
+
+    # Load environment variables without specifying a path
+    # This should find .env.local in the same directory as this test file
+    result = load_env(filename=".env.local", path=current_dir)
+
+    # Check if loading was successful
+    assert result is True
+
+    # Check if variables were set correctly
+    assert os.environ["VAR_0"] == "123.5"
+    assert os.environ["VAR_1"] == "string"
+    assert os.environ["VAR_2"] == r"[\"hello#world\"]"

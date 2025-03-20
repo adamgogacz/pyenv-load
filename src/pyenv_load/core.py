@@ -38,8 +38,7 @@ def load_env(filename: str = ".env.local", path: str | Path | None = None) -> bo
 
         if filename.lower().endswith(".json"):
             return _load_json_env(env_path)
-        else:
-            return _load_dotenv(env_path)
+        return _load_dotenv(env_path)
 
     except FileNotFoundError:
         print(f"Environment file not found: {env_path}")
@@ -81,10 +80,10 @@ def _load_dotenv(file_path: Path) -> bool:
                 key, value = line.split("=", 1)
                 key = key.strip()
 
-                # Check for comments at the end of the line
-                if "#" in value:
-                    # This is a simple approach; doesn't handle cases where # is inside quoted strings
-                    value = value.split("#", 1)[0].strip()
+                # # Check for comments at the end of the line
+                # if "#" in value:
+                #     # This is a simple approach; doesn't handle cases where # is inside quoted strings
+                #     value = value.split("#", 1)[0].strip()
 
                 # Validate environment variable name
                 if not _is_valid_env_var_name(key):

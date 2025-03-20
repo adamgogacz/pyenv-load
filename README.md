@@ -76,7 +76,7 @@ api_key = os.environ.get("API_KEY")
 ## Features
 
 - Load environment variables from `.env` files or JSON files
-- Supports comments in `.env` files
+- Supports comments in `.env` files (first character [`#`] on a line)
 - Validates environment variable names
 - Handles quoted values in `.env` files
 - Converts all values to strings when setting environment variables
